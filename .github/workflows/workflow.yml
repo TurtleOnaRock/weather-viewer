@@ -30,14 +30,14 @@ jobs:
           source: "target/weather-viewer.war"
           target: "/opt/apache-tomcat-10.1.39/webapps"
 
-#      - name: Restart Tomcat service
-#        uses: appleboy/ssh-action@v0.1.7
-#        with:
-#          host: ${{ secrets.HOST }}
-#          username: ${{ secrets.USERNAME }}
-#          key: ${{ secrets.SSH_KEY }}
-#          script: >
-#                  mv /opt/apache-tomcat-10.1.39/webapps/target/weather-viewer.war /opt/apache-tomcat-11.0.5/webapps;
-#                  rm -r /opt/apache-tomcat-10.1.39/webapps/target;
-#                  /opt/apache-tomcat-10.1.39/bin/shutdown.sh;
-#                  /opt/apache-tomcat-10.1.39/bin/startup.sh
+      - name: Restart Tomcat service
+        uses: appleboy/ssh-action@v0.1.7
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.USERNAME }}
+          key: ${{ secrets.SSH_KEY }}
+          script: >
+                  mv /opt/apache-tomcat-10.1.39/webapps/target/weather-viewer.war /opt/apache-tomcat-10.1.39/webapps;
+                  rm -r /opt/apache-tomcat-10.1.39/webapps/target;
+                  /opt/apache-tomcat-10.1.39/bin/shutdown.sh;
+                  /opt/apache-tomcat-10.1.39/bin/startup.sh
