@@ -19,7 +19,7 @@ jobs:
           distribution: 'temurin'
 
       - name: Build WAR with Maven
-        run: mvc clean package
+        run: mvn clean package
 
       - name: Copy WAR to remote Tomcat
         uses: appleboy/scp-action@v0.1.4
