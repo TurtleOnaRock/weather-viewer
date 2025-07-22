@@ -2,19 +2,22 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Admin</title>
+    <title>TEST</title>
 </head>
 <body>
 
 <div>
-    <h1>Test page</h1>
-    <h3><a th:href="@{/sign-up}">Registration AGAIN</a></h3>
+    <h1>Temporary Testing Start Page</h1>
+    <h3>
+        <a th:href="@{/sign-up}">Registration</a>
+         - compelitly ready to use and test!
+    </h3>
 </div>
 
 <div th:each="user : ${users}">
-    <p th:text="|User id  = ${user.id}|">User ID</p>
-    <p th:text="|Login    = ${user.login}|">Login</p>
-    <p th:text="|Password = ${user.password}|">Password</p>
+    <div th:text="|User id  = ${user.id}|">User ID</div>
+    <div th:text="|Login    = ${user.login}|">Login</div>
+    <div th:text="|Password = ${user.password}|">Password</div>
     <hr>
 </div>
 
