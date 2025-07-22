@@ -39,7 +39,7 @@ public class UserRegistrationController {
             model.addAttribute("userAlreadyExist", true);
             return "sign-up-with-errors";
         }
-        return "redirect:/test";
+        return "redirect:/";
     }
 
     private boolean different(String firstString, String secondString){
