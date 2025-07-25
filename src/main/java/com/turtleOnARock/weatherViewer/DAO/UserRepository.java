@@ -5,7 +5,7 @@ import com.turtleOnARock.weatherViewer.entities.User;
 import java.util.List;
 import java.util.Optional;
 
-public interface UserDao {
+public interface UserRepository {
 
     Optional<User> findByLogin(String login);
 

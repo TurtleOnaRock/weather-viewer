@@ -1,18 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
        xmlns:context="http://www.springframework.org/schema/context"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/mvc https://www.springframework.org/schema/mvc/spring-mvc.xsd http://www.springframework.org/schema/context https://www.springframework.org/schema/context/spring-context.xsd">
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/mvc
+            http://www.springframework.org/schema/mvc/spring-mvc.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/tx
+            http://www.springframework.org/schema/tx/spring-tx.xsd">
 
     <context:component-scan base-package="com.turtleOnARock.weatherViewer"/>
+    <context:property-placeholder location="classpath:database.properties"/>
     <mvc:annotation-driven/>
 
-    <bean id="templeteResolver" class="org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver">
+    <!-- ThymeLeaf setting -->
+    <bean id="templateResolver" class="org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver">
         <property name="prefix" value="/WEB-INF/templates/"/>
         <property name="suffix" value=".html"/>
     </bean>
     <bean id="templateEngine" class="org.thymeleaf.spring6.SpringTemplateEngine">
-        <property name="templateResolver" ref="templeteResolver"/>
+        <property name="templateResolver" ref="templateResolver"/>
         <property name="enableSpringELCompiler" value="true"/>
     </bean>
     <bean class="org.thymeleaf.spring6.view.ThymeleafViewResolver">
@@ -20,4 +32,49 @@
         <property name="order" value="1"/>
         <property name="viewNames" value="*"/>
     </bean>
+
+    <!-- Define Database DataSource / connection pool -->
+    <bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close">
+<!--        ========== DATA BASE SETUP =============-->
+        <property name="driverClass" value="${database.driver_class}"/>
+        <property name="jdbcUrl" value="${database.url}"/>
+        <property name="user" value="${database.username}"/>
+        <property name="password" value="${database.password}"/>
+<!--        ========== CONNECTION POLL SETUP =============-->
+        <property name="maxPoolSize" value="${database.c3p0.max_size}"/>
+        <property name="minPoolSize" value="${database.c3p0.min_size}"/>
+        <property name="acquireIncrement" value="1"/>
+        <property name="maxIdleTime" value="300"/>
+        <property name="checkoutTimeout" value="30000"/>
+        <property name="idleConnectionTestPeriod" value="300"/>
+        <property name="testConnectionOnCheckout" value="true"/>
+        <property name="preferredTestQuery" value="SELECT 1"/>
+    </bean>
+
+<!--        ========== HIBERNATE SETUP =============-->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="packagesToScan" value="com.turtleOnARock.weatherViewer.entities"/>
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="hibernate.hbm2ddl.auto">update</prop>
+                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.format_sql">true</prop>
+                <prop key="hibernate.c3p0.max_size">10</prop>
+                <prop key="hibernate.c3p0.mix_size">5</prop>
+                <prop key="hibernate.c3p0.timeout">300</prop>
+                <prop key="hibernate.c3p0.max_statements">50</prop>
+                <prop key="hibernate.c3p0.idle_test_period">30000</prop>
+            </props>
+        </property>
+    </bean>
+
+<!--      ========= TRANSACTION MANAGER SETUP =========== -->
+    <bean id="transactionManager" class="org.springframework.orm.hibernate5.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
 </beans>
