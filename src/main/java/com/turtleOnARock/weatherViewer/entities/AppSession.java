@@ -5,14 +5,14 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.sql.Time;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "Sessions")
+@Table(name = "AppSessions")
 @Setter
 @Getter
 @NoArgsConstructor
-public class Session {
+public class AppSession {
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -23,9 +23,9 @@ public class Session {
     private int userId;
 
     @Column(name = "ExpiresAt")
-    private Time expiresAt;
+    private LocalDateTime expiresAt;
 
-    public Session(int userId, Time expiresAt){
+    public AppSession(int userId, LocalDateTime expiresAt){
         this.userId = userId;
         this.expiresAt = expiresAt;
     }

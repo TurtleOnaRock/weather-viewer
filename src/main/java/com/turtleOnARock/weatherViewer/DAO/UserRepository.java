@@ -11,6 +11,8 @@ public interface UserRepository {
 
     User getByLogin (String login);
 
+    User getById(int userId);
+
     void save(User user);
 
     List<User> getAll();

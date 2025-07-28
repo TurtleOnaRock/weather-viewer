@@ -18,6 +18,13 @@ public class UserRepositoryImpl implements UserRepository {
     public UserRepositoryImpl(SessionFactory sessionFactory){
         this.sessionFactory = sessionFactory;
     }
+
+    @Override
+    public User getById(int userId) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(User.class, userId);
+    }
+
     @Override
     public Optional<User> findByLogin(String login) {
         try{
