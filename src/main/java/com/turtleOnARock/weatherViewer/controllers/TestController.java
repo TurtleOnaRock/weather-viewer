@@ -41,7 +41,7 @@ public class TestController {
             testSignInDto.setSessionId(sessionId);
         }
 
-        model.addAttribute("sessions", sessions);
+        model.addAttribute("appSessions", sessions);
         model.addAttribute("testSignInDto", testSignInDto);
         model.addAttribute("users", users);
         return "test";

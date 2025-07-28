@@ -40,10 +40,10 @@
     </div>
     <div class="flex-fill">
         <h2>Sessions</h2>
-        <div th:each="session : ${sessions}">
-            <div th:text="|Session id = ${session.id}|">session ID</div>
-            <div th:text="|User id = ${session.userId}|">User ID</div>
-            <div th:text="|ExpiresAt = ${session.expiresAt}|">Death time</div>
+        <div th:each="appSession : ${appSessions}">
+            <div th:text="|Session id = ${appSession.id}|">session ID</div>
+            <div th:text="|User id = ${appSession.userId}|">User ID</div>
+            <div th:text="|ExpiresAt = ${appSession.expiresAt}|">Death time</div>
         </div>
     </div>
 </div>
