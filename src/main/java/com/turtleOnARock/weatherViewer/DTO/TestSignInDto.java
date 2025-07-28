@@ -10,7 +10,7 @@ import java.time.LocalDateTime;
 @Setter
 @NoArgsConstructor
 public class TestSignInDto {
-    private String username;
+    private String login;
     private int sessionId;
     private LocalDateTime expiresAt;
 }

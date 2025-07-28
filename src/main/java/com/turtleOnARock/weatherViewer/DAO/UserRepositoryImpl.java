@@ -11,6 +11,11 @@ import java.util.Optional;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
+    @Override
+    public User getById(int userId) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.get(User.class, userId);
+    }
 
     private final SessionFactory sessionFactory;
 
