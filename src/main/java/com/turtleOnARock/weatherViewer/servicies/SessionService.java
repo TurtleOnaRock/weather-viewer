@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
+
 @Service
 @Transactional
 public class SessionService {
@@ -18,5 +20,9 @@ public class SessionService {
 
     public AppSession getSession(int sessionId){
         return sessionRepository.getById(sessionId);
+    }
+
+    public List<AppSession> getAllSessions() {
+        return sessionRepository.getAll();
     }
 }

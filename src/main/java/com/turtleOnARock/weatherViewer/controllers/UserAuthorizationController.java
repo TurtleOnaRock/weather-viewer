@@ -5,6 +5,7 @@ import com.turtleOnARock.weatherViewer.exceptions.UserNotFoundException;
 import com.turtleOnARock.weatherViewer.exceptions.WrongPasswordException;
 import com.turtleOnARock.weatherViewer.servicies.AuthorizationService;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseCookie;
@@ -30,7 +31,7 @@ public class UserAuthorizationController {
 
     @PostMapping
     public String postSignIn(@CookieValue(value = "sessionId", defaultValue = "0") int sessionId,
-                             @ModelAttribute("authorizationDto") AuthorizationDto dto,
+                             @ModelAttribute("authorizationDto") @Valid AuthorizationDto dto,
                              BindingResult bindingResult,
                              HttpServletResponse response,
                              Model model){

@@ -21,17 +21,31 @@
         </h3>
     </div>
     <div class="flex-fill" th:object="${testSignInDto}">
-        <div th:text="*{login}">Login</div>
-        <div th:text="*{sessionId}">SessionId</div>
-        <div th:text="*{expiresAt}">Death Time</div>
+        <div>Active user:</div>
+        <div th:text="|Login: *{login}|">Login</div>
+        <div th:text="|SessionId: *{sessionId}|">SessionId</div>
+        <div th:text="|Death time: *{expiresAt}|">Death Time</div>
     </div>
 </div>
 
-<div th:each="user : ${users}">
-    <div th:text="|User id  = ${user.id}|">User ID</div>
-    <div th:text="|Login    = ${user.login}|">Login</div>
-    <div th:text="|Password = ${user.password}|">Password</div>
-    <hr>
+<div class="d-flex">
+    <div class="flex-fill">
+        <h2>Users</h2>
+        <div th:each="user : ${users}">
+            <div th:text="|User id  = ${user.id}|">User ID</div>
+            <div th:text="|Login    = ${user.login}|">Login</div>
+            <div th:text="|Password = ${user.password}|">Password</div>
+            <hr>
+        </div>
+    </div>
+    <div class="flex-fill">
+        <h2>Sessions</h2>
+        <div th:each="session : ${sessions}">
+            <div th:text="|Session id = ${session.id}|">session ID</div>
+            <div th:text="|User id = ${session.userId}|">User ID</div>
+            <div th:text="|ExpiresAt = ${session.expiresAt}|">Death time</div>
+        </div>
+    </div>
 </div>
 
 </body>

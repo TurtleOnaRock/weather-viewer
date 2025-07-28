@@ -29,7 +29,7 @@ public class AuthorizationService {
     }
 
     public int login(AuthorizationDto dto) {
-        String inputUsername = dto.getEmail();
+        String inputUsername = dto.getLogin();
         Optional<User> userOptional = userRepository.findByLogin(inputUsername);
         if(userOptional.isPresent()){
             User user = userOptional.get();

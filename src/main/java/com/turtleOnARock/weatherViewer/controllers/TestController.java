@@ -23,12 +23,16 @@ public class TestController {
 
     @Autowired
     private UserService userService;
+    @Autowired
     private SessionService sessionService;
 
     @GetMapping
     public String getAllUsers (@CookieValue(value = "sessionId", defaultValue = "0") int sessionId,
-                               @ModelAttribute("testSignInDto") TestSignInDto testSignInDto,
                                Model model){
+        TestSignInDto testSignInDto = new TestSignInDto();
+        List<User> users = userService.getAllUsers();
+        List<AppSession> sessions = sessionService.getAllSessions();
+
         if(sessionId != 0){
             AppSession appSession = sessionService.getSession(sessionId);
             User user = userService.getUser(appSession.getUserId());
@@ -36,7 +40,9 @@ public class TestController {
             testSignInDto.setExpiresAt(appSession.getExpiresAt());
             testSignInDto.setSessionId(sessionId);
         }
-        List<User> users = userService.getAllUsers();
+
+        model.addAttribute("sessions", sessions);
+        model.addAttribute("testSignInDto", testSignInDto);
         model.addAttribute("users", users);
         return "test";
     }
